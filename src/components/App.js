@@ -1,6 +1,13 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+
+import { addCar } from "../actions";
 
 class App extends Component {
+  componentDidMount() {
+    this.props.addCar();
+  }
+
   render() {
     return (
       <div className="App">
@@ -12,4 +19,7 @@ class App extends Component {
   }
 }
 
-export default App;
+export default connect(
+  null,
+  { addCar }
+)(App);
