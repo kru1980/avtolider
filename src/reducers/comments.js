@@ -18,9 +18,6 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case ADD_CAR:
-      console.log(state);
-      return state;
     default:
       return state;
   }
