@@ -3,7 +3,7 @@ import {
   ADD_CAR_START,
   ADD_CAR_FAIL
 } from "../constants/ActionTypes";
-import database from "../firebase";
+import fire from "../firebase";
 
 export const addCarStart = () => {
   return {
@@ -28,7 +28,7 @@ export const addCarFail = error => {
 export const addCar = car => {
   return dispatch => {
     const addData = new Date();
-    const carsRef = database.ref("/cars");
+    const carsRef = fire.database().ref("/cars");
     const newCar = carsRef.push();
     const newCarId = newCar.key;
 
