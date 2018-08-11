@@ -1,27 +1,24 @@
-import { ADD_CAR } from "../constants/ActionTypes";
-
-// byId: {
-//   cars1: {
-//     id: "cars1",
-//     model: "bmv",
-//     year: 1990
-//   },
-//   cars2: {
-//     id: "cars2",
-//     model: "lexus",
-//     year: 2010
-//   }
-// },
-// allIds: ["cars1", "cars2"]
+import {
+  ADD_CAR_SUCCESS,
+  ADD_CAR_START,
+  ADD_CAR_FAIL
+} from "../constants/ActionTypes";
 
 const initialState = {
   byId: {},
-  allIds: []
+  allIds: [],
+  loading: false,
+  error: null
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case ADD_CAR:
+    case ADD_CAR_START:
+      return {
+        ...state,
+        loading: true
+      };
+    case ADD_CAR_SUCCESS:
       return {
         ...state,
         byId: {
@@ -35,7 +32,15 @@ const reducer = (state = initialState, action) => {
             color: action.payload.color
           }
         },
-        allIds: state.allIds.concat(action.payload.id)
+        allIds: state.allIds.concat(action.payload.id),
+        loading: false,
+        error: null
+      };
+    case ADD_CAR_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload.error
       };
     default:
       return state;

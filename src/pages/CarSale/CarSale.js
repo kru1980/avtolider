@@ -6,9 +6,10 @@ import { connect } from "react-redux";
 import { addCar } from "../../actions/index";
 
 const CarSale = props => {
-  const { handleSubmit } = props;
+  const { handleSubmit, reset } = props;
   const onSubmit = car => {
     props.addCar(car);
+    reset("carsale");
   };
   return (
     <div>
