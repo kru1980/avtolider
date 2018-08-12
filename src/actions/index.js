@@ -1,7 +1,10 @@
 import {
   ADD_CAR_SUCCESS,
   ADD_CAR_START,
-  ADD_CAR_FAIL
+  ADD_CAR_FAIL,
+  FETCH_CARS_START,
+  FETCH_CARS_SUCCESS,
+  FETCH_CARS_FAIL
 } from "../constants/ActionTypes";
 import fire from "../firebase";
 
@@ -11,10 +14,10 @@ export const addCarStart = () => {
   };
 };
 
-export const addCarSucess = (car, id, addData) => {
+export const addCarSuccess = (car, id, date) => {
   return {
     type: ADD_CAR_SUCCESS,
-    payload: { ...car, id, addData }
+    payload: { ...car, id, date }
   };
 };
 
@@ -27,7 +30,7 @@ export const addCarFail = error => {
 
 export const addCar = car => {
   return dispatch => {
-    const addData = new Date();
+    const date = new Date().toString();
     const carsRef = fire.database().ref("/cars");
     const newCar = carsRef.push();
     const newCarId = newCar.key;
@@ -38,13 +41,39 @@ export const addCar = car => {
       .set({
         ...car,
         id: newCarId,
-        data: addData
+        date: date
       })
       .then(() => {
-        dispatch(addCarSucess(car, newCarId, addData));
+        dispatch(addCarSuccess(car, newCarId, date));
       })
       .catch(err => {
         dispatch(addCarFail(err));
       });
+  };
+};
+
+export const fetchCarStart = () => {
+  return {
+    type: FETCH_CARS_START
+  };
+};
+
+export const fetchCarsSuccess = cars => {
+  return {
+    type: FETCH_CARS_SUCCESS,
+    payload: { ...cars }
+  };
+};
+
+export const fetchCars = () => {
+  return dispatch => {
+    const carsRef = fire.database().ref("/cars");
+
+    dispatch(addCarStart());
+
+    carsRef.once("value", snapshot => {
+      const cars = snapshot.val();
+      dispatch(fetchCarsSuccess(cars));
+    });
   };
 };
