@@ -6,6 +6,8 @@ import configureStote from "./store/configureStore";
 import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
 
+import "./index.css";
+
 const store = configureStote();
 
 ReactDOM.render(
