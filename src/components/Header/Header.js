@@ -1,24 +1,23 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Layout, Menu } from "antd";
 
 import "./header.css";
 
-const Header = () => {
+const HeaderNav = () => {
   return (
-    <header className="header">
-      <ul>
-        <li>
-          <Link to={`/`}>Главная</Link>
-        </li>
-        <li>
-          <Link to={`/sale`}>Продать</Link>
-        </li>
-        <li>
-          <Link to={`/signin`}>Войти</Link>
-        </li>
-      </ul>
-    </header>
+    <Menu mode="horizontal" theme="dark" style={{ lineHeight: "64px" }}>
+      <Menu.Item>
+        <Link to={`/`}>Главная</Link>
+      </Menu.Item>
+      <Menu.Item>
+        <Link to={`/sale`}>Продать</Link>
+      </Menu.Item>
+      <Menu.Item>
+        <Link to={`/signin`}>Войти</Link>
+      </Menu.Item>
+    </Menu>
   );
 };
 
-export default Header;
+export default HeaderNav;

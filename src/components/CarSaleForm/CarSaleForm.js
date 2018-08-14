@@ -2,8 +2,10 @@ import React from "react";
 import { Field, reduxForm } from "redux-form";
 import { compose } from "redux";
 import { connect } from "react-redux";
-import { Button, Input } from "antd";
+import { Button } from "antd";
 
+import FieldInput from "../UX/FieldInput/FieldInput";
+import FieldTextarea from "../UX/FieldTextarea/FieldTextarea";
 import { addCar } from "../../actions/index";
 
 import "./carsaleform.css";
@@ -18,22 +20,49 @@ const CarSaleForm = props => {
     <div className="form-wrapper">
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="label-wrapper">
-          <label htmlFor="producer">Производитель</label>
-          <Field name="producer" component={Input} type="text" />
+          <Field
+            name="producer"
+            component={FieldInput}
+            type="text"
+            label="Производитель"
+          />
         </div>
         <div className="label-wrapper">
-          <label htmlFor="model">Марка автомобиля</label>
-          <Field name="model" component={Input} type="text" />
+          <Field
+            name="model"
+            component={FieldInput}
+            type="text"
+            label="Марка автомобиля"
+          />
         </div>
         <div className="label-wrapper">
-          <label htmlFor="year">Год</label>
-          <Field name="year" component={Input} type="text" />
+          <Field name="year" component={FieldInput} type="text" label="Год" />
         </div>
         <div className="label-wrapper">
-          <label htmlFor="color">Цвет</label>
-          <Field name="color" component={Input} type="text" />
+          <Field name="color" component={FieldInput} type="text" label="Цвет" />
         </div>
-        <Button type="primary">Отправить</Button>
+        <div className="label-wrapper">
+          <Field
+            name="description"
+            component={FieldTextarea}
+            type="text"
+            label="Описание"
+          />
+        </div>
+        <div className="label-wrapper">
+          <Field name="price" component={FieldInput} type="text" label="Цена" />
+        </div>
+        <div className="label-wrapper">
+          <Field
+            name="phone"
+            component={FieldInput}
+            type="text"
+            label="Телефон"
+          />
+        </div>
+        <Button type="primary" htmlType="submit">
+          Отправить
+        </Button>
       </form>
     </div>
   );

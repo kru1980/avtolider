@@ -1,7 +1,6 @@
 import {
   ADD_CAR_SUCCESS,
   ADD_CAR_START,
-  ADD_CAR_FAIL,
   FETCH_CARS_START,
   FETCH_CARS_SUCCESS,
   FETCH_CARS_FAIL
@@ -21,34 +20,19 @@ export const addCarSuccess = (car, id, date) => {
   };
 };
 
-export const addCarFail = error => {
-  return {
-    type: ADD_CAR_FAIL,
-    payload: error
-  };
-};
-
 export const addCar = car => {
-  return dispatch => {
-    const date = new Date().toString();
+  return async dispatch => {
+    const date = new Date(Date.now()).toString();
     const carsRef = fire.database().ref("/cars");
     const newCar = carsRef.push();
     const newCarId = newCar.key;
-
     dispatch(addCarStart());
-
-    newCar
-      .set({
-        ...car,
-        id: newCarId,
-        date: date
-      })
-      .then(() => {
-        dispatch(addCarSuccess(car, newCarId, date));
-      })
-      .catch(err => {
-        dispatch(addCarFail(err));
-      });
+    await newCar.set({
+      ...car,
+      id: newCarId,
+      date: date
+    });
+    dispatch(addCarSuccess(car, newCarId, date));
   };
 };
 
@@ -65,15 +49,25 @@ export const fetchCarsSuccess = cars => {
   };
 };
 
+export const fetchCarsFail = error => {
+  return {
+    type: FETCH_CARS_FAIL,
+    payload: error
+  };
+};
+
 export const fetchCars = () => {
-  return dispatch => {
-    const carsRef = fire.database().ref("/cars");
-
+  return async dispatch => {
     dispatch(addCarStart());
-
-    carsRef.once("value", snapshot => {
+    try {
+      const carsRef = fire.database().ref("/cars");
+      const snapshot = await carsRef.once("value");
       const cars = snapshot.val();
+      if (!cars) throw new Error("Не могу загрузить список автомобилей");
       dispatch(fetchCarsSuccess(cars));
-    });
+    } catch (error) {
+      console.log("Error getting documents ", error.message);
+      dispatch(fetchCarsFail(error.message));
+    }
   };
 };

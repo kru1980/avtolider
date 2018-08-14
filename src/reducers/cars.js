@@ -1,7 +1,6 @@
 import {
   ADD_CAR_SUCCESS,
   ADD_CAR_START,
-  ADD_CAR_FAIL,
   FETCH_CARS_START,
   FETCH_CARS_SUCCESS,
   FETCH_CARS_FAIL
@@ -32,18 +31,15 @@ const reducer = (state = initialState, action) => {
             producer: action.payload.producer,
             model: action.payload.model,
             year: action.payload.year,
-            color: action.payload.color
+            color: action.payload.color,
+            description: action.payload.description,
+            price: action.payload.price,
+            phone: action.payload.phone
           }
         },
         allIds: state.allIds.concat(action.payload.id),
         loading: false,
         error: null
-      };
-    case ADD_CAR_FAIL:
-      return {
-        ...state,
-        loading: false,
-        error: action.payload.error
       };
     case FETCH_CARS_START: {
       return {
@@ -62,6 +58,12 @@ const reducer = (state = initialState, action) => {
         allIds: allIds,
         loading: false,
         error: null
+      };
+    case FETCH_CARS_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload
       };
     default:
       return state;
