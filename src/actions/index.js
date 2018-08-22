@@ -20,10 +20,16 @@ export const addCarSuccess = (car, id, date) => {
   };
 };
 
-export const addCar = car => {
+export const addCar = (car, file) => {
   return async dispatch => {
-    const date = new Date(Date.now()).toString();
+    const options = {
+      year: "numeric",
+      month: "long",
+      day: "numeric"
+    };
+    const date = new Date(Date.now()).toLocaleDateString("ru-RU", options);
     const carsRef = fire.database().ref("/cars");
+    const storageRef = fire.storage().ref("images/");
     const newCar = carsRef.push();
     const newCarId = newCar.key;
     dispatch(addCarStart());
@@ -32,6 +38,13 @@ export const addCar = car => {
       id: newCarId,
       date: date
     });
+    await storageRef
+      .child("images/" + file.name)
+      .put(file)
+      .on("state_changed", snapshot => {
+        let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log("Upload is " + progress + "% done");
+      });
     dispatch(addCarSuccess(car, newCarId, date));
   };
 };

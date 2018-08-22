@@ -5,3 +5,17 @@
 .label-wrapper {
   margin-bottom: 16px;
 }
+
+.avatar-uploader > .ant-upload {
+  width: 128px;
+  height: 128px;
+}
+
+.image {
+  width: 200px;
+  height: 200px;
+}
+
+.image img {
+  max-width: 100%;
+}
