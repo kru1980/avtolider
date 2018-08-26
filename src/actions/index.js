@@ -34,9 +34,16 @@ export const addCar = (car, file) => {
     const newCarId = newCar.key;
     dispatch(addCarStart());
     await newCar.set({
-      ...car,
+      producer: car.producer,
+      model: car.model,
+      year: car.year,
+      color: car.color,
+      description: car.description,
+      price: car.price,
+      phone: car.phone,
       id: newCarId,
-      date: date
+      date: date,
+      image: file.name
     });
     await storageRef
       .child(file.name)

@@ -11,6 +11,26 @@ import { addCar } from "../../actions/index";
 
 import "./car_sale_form.css";
 
+const validate = values => {
+  const errMessage = {
+    producer: "Добавьте производителя",
+    model: "Добавьте модель",
+    year: "Добавьте год",
+    color: "Добавьте цвет",
+    description: "Добавить описание",
+    price: "Добавить цену",
+    phone: "Добавить телефон",
+    files: "добавьте изображение"
+  };
+  const errors = {};
+  for (let key in errMessage) {
+    if (!values[key]) {
+      errors[key] = errMessage[key];
+    }
+  }
+  return errors;
+};
+
 class CarSaleForm extends Component {
   state = {
     image: null,
@@ -41,8 +61,9 @@ class CarSaleForm extends Component {
       file: file
     });
   };
+
   render() {
-    const { handleSubmit } = this.props;
+    const { handleSubmit, submitting, pristine, invalid } = this.props;
     return (
       <div className="form-wrapper">
         <form onSubmit={handleSubmit(this.onSubmit)}>
@@ -80,14 +101,12 @@ class CarSaleForm extends Component {
             dropzoneOnDrop={this.handleUploadSuccess}
             image={this.state.image}
           />
-          {/* <div className="form">
-            <input
-              accept=".jpg, .jpeg, .png"
-              type="file"
-              onChange={this.handleUploadSuccess}
-            />
-          </div> */}
-          <Button className="btn-submit" type="primary" htmlType="submit">
+          <Button
+            disabled={invalid || pristine || submitting}
+            className="btn-submit"
+            type="primary"
+            htmlType="submit"
+          >
             Отправить
           </Button>
         </form>
@@ -101,5 +120,5 @@ export default compose(
     null,
     { addCar }
   ),
-  reduxForm({ form: "carsale" })
+  reduxForm({ form: "carsale", validate })
 )(CarSaleForm);

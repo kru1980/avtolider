@@ -3,7 +3,7 @@ import "firebase/database";
 import "firebase/storage";
 
 const config = {
-  apiKey: "AIzaSyARnqWq1QmYRtdAYlkaxypZxNhyftOf6A8",
+  apiKey: process.env.REACT_APP_API_KEY,
   authDomain: "avtolider-adc37.firebaseapp.com",
   databaseURL: "https://avtolider-adc37.firebaseio.com",
   projectId: "avtolider-adc37",

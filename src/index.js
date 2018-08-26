@@ -10,6 +10,8 @@ import "./index.css";
 
 const store = configureStore();
 
+console.log(process.env);
+
 ReactDOM.render(
   <Provider store={store}>
     <App />
