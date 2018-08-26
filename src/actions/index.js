@@ -39,7 +39,7 @@ export const addCar = (car, file) => {
       date: date
     });
     await storageRef
-      .child("images/" + file.name)
+      .child(file.name)
       .put(file)
       .on("state_changed", snapshot => {
         let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
