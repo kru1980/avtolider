@@ -1,7 +1,9 @@
 import React from "react";
-import { Input } from "antd";
+import { Input, Form } from "antd";
 
 import "./field_input.css";
+
+const FormItem = Form.Item;
 
 const FieldInput = ({
   input,
@@ -10,11 +12,13 @@ const FieldInput = ({
   meta: { touched, error, warning }
 }) => {
   return (
-    <div className="label-wrapper">
-      <label>{label}</label>
+    <FormItem
+      label={label}
+      validateStatus={touched && error ? "error" : "success"}
+      help={touched && error ? error : ""}
+    >
       <Input {...input} type={type} placeholder={label} />
-      {touched && (error && <span>{error}</span>)}
-    </div>
+    </FormItem>
   );
 };
 

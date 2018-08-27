@@ -14,7 +14,7 @@ import "./car_sale_form.css";
 const validate = values => {
   const errMessage = {
     producer: "Добавьте производителя",
-    model: "Добавьте модель",
+    model: "Добавьте марку автомобиля",
     year: "Добавьте год",
     color: "Добавьте цвет",
     description: "Добавить описание",
@@ -33,7 +33,6 @@ const validate = values => {
 
 class CarSaleForm extends Component {
   state = {
-    image: null,
     file: null
   };
   onSubmit = car => {
@@ -41,22 +40,14 @@ class CarSaleForm extends Component {
     this.props.reset("carsale");
   };
 
-  getBase64 = file => {
-    var reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      this.setState({
-        image: reader.result
-      });
-    };
-    reader.onerror = function(error) {
-      console.log("Error: ", error);
-    };
-  };
-
   handleUploadSuccess = filename => {
     let file = filename[0];
-    this.getBase64(file);
+    this.setState({
+      file: file
+    });
+  };
+
+  saveFile = file => {
     this.setState({
       file: file
     });
@@ -98,8 +89,10 @@ class CarSaleForm extends Component {
             name="files"
             component={UploadImage}
             multiple={false}
+            accept="image/*"
             dropzoneOnDrop={this.handleUploadSuccess}
-            image={this.state.image}
+            file={this.state.file}
+            saveFile={this.saveFile}
           />
           <Button
             disabled={invalid || pristine || submitting}

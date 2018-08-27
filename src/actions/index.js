@@ -21,6 +21,7 @@ export const addCarSuccess = (car, id, date) => {
 };
 
 export const addCar = (car, file) => {
+  console.log(file.name);
   return async dispatch => {
     const options = {
       year: "numeric",
