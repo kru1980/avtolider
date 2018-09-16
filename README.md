@@ -1,7 +1,5 @@
 # Content #
 
-***
-
 1. ReduxForm day2 (0:40)
 
 2. Create action ADD_CAR day2 (1:10)
