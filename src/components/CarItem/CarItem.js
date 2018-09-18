@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 const CarItem = ({ car }) => {
   return (
@@ -9,6 +10,15 @@ const CarItem = ({ car }) => {
       <p>{car.color}</p>
     </div>
   );
+};
+
+CarItem.propTypes = {
+  car: PropTypes.shape({
+    producer: PropTypes.string.isRequired,
+    model: PropTypes.string.isRequired,
+    year: PropTypes.string.isRequired,
+    color: PropTypes.string.isRequired
+  })
 };
 
 export default CarItem;

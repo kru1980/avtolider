@@ -3,6 +3,7 @@ import { Field, reduxForm } from "redux-form";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import { Button } from "antd";
+import PropTypes from "prop-types";
 
 import FieldInput from "../UX/FieldInput/FieldInput";
 import FieldTextarea from "../UX/FieldTextarea/FieldTextarea";
@@ -107,6 +108,10 @@ class CarSaleForm extends Component {
     );
   }
 }
+
+CarSaleForm.propTypes = {
+  addCar: PropTypes.func
+};
 
 export default compose(
   connect(
